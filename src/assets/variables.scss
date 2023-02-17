@@ -1,7 +1,20 @@
+// colors
 :root {
   --light-text-color: #fff;
   --text-color: #252b42;
   --second-text-color: #737373;
   --primary-color: #96bb7c;
+  --primary-text-color: #96bb7c;
+  --faded-primary-color: #eff8ed;
   --danger-color: #e74040;
+}
+
+// shadow
+:root {
+  --accentued-drop-shadow: 0px 13px 19px rgba(0, 0, 0, 0.07);
+}
+
+// border
+:root {
+  --primary-border: 1px solid var(--primary-color);
 }
