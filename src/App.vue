@@ -6,15 +6,19 @@ import { RouterLink, RouterView } from "vue-router";
   <header class="header">
     <div class="header__container">
       <div class="header__flex">
-        <RouterLink class="header__logo" to="/">BrandName</RouterLink>
+        <RouterLink class="header__logo" aria-label="logo" to="/">
+          BrandName
+        </RouterLink>
         <nav class="header__nav">
           <RouterLink class="header__link" to="/">Home</RouterLink>
           <RouterLink class="header__link" to="/">Product</RouterLink>
           <RouterLink class="header__link" to="/">Pricing</RouterLink>
           <RouterLink class="header__link" to="/">Contact</RouterLink>
         </nav>
-        <RouterLink class="header__login" to="/">Login</RouterLink>
-        <RouterLink class="header__join-us" to="/">
+        <RouterLink class="header__login" to="/" aria-label="login">
+          Login
+        </RouterLink>
+        <RouterLink class="header__join-us" aria-label="join us" to="/">
           JOIN US
           <svg
             width="12"
@@ -33,21 +37,26 @@ import { RouterLink, RouterView } from "vue-router";
         </RouterLink>
       </div>
     </div>
+    <div class="header__background"></div>
   </header>
 
-  <RouterView />
+  <main class="main">
+    <RouterView />
+  </main>
 </template>
 
 <style lang="scss" scoped>
 @import "./assets/mixins.scss";
 
 .header {
+  position: relative;
   display: flex;
   align-items: center;
   height: 95px;
 
   &__container {
     @include container;
+    z-index: 10;
   }
 
   &__flex {
@@ -62,6 +71,19 @@ import { RouterLink, RouterView } from "vue-router";
     line-height: 133%;
     letter-spacing: 0.1px;
     color: var(--text-color);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    &:focus-visible {
+      color: var(--primary-color);
+    }
+
+    &:active {
+      color: var(--text-color);
+    }
   }
 
   &__nav {
@@ -77,6 +99,19 @@ import { RouterLink, RouterView } from "vue-router";
     text-align: center;
     letter-spacing: 0.2px;
     color: var(--second-text-color);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    &:focus-visible {
+      color: var(--primary-color);
+    }
+
+    &:active {
+      color: var(--second-text-color);
+    }
   }
 
   &__login {
@@ -87,6 +122,19 @@ import { RouterLink, RouterView } from "vue-router";
     text-align: right;
     letter-spacing: 0.2px;
     color: var(--primary-color);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--second-text-color);
+    }
+
+    &:focus-visible {
+      color: var(--second-text-color);
+    }
+
+    &:active {
+      color: var(--primary-color);
+    }
   }
 
   &__join-us {
@@ -95,13 +143,31 @@ import { RouterLink, RouterView } from "vue-router";
     gap: 15px;
     padding: 15px 21px 15px 25px;
     margin: 0 84px 0 0;
+    width: 137px;
+    height: 52px;
+    border: var(--primary-border);
     border-radius: 5px;
     font-weight: 700;
     font-size: 14px;
     line-height: 157%;
     letter-spacing: 0.2px;
     color: var(--light-text-color);
-    background: var(--primary-color);
+    background-color: var(--primary-color);
+    @include green-btn-w-svg;
   }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48.5%;
+    height: 543.79px;
+    background: url("./assets/img/header-background.png");
+    z-index: 5;
+  }
+}
+
+.main {
+  position: relative;
 }
 </style>
