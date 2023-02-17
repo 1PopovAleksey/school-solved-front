@@ -2,3 +2,84 @@
   margin: 0 auto;
   width: 1046px;
 }
+
+@mixin green-btn-w-svg {
+  transition: all 0.3s ease;
+
+  svg {
+    path {
+      transition: all 0.3s ease;
+    }
+  }
+
+  &:hover {
+    background-color: var(--light-text-color);
+    color: var(--primary-color);
+
+    svg {
+      path {
+        fill: var(--primary-color);
+      }
+    }
+  }
+
+  &:focus-visible {
+    background-color: var(--light-text-color);
+    color: var(--primary-color);
+
+    svg {
+      path {
+        fill: var(--primary-color);
+      }
+    }
+  }
+
+  &:active {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+
+    svg {
+      path {
+        fill: var(--light-text-color);
+      }
+    }
+  }
+}
+
+@mixin green-btn {
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--faded-primary-color);
+    color: var(--primary-color);
+  }
+
+  &:focus-visible {
+    background-color: var(--faded-primary-color);
+    color: var(--primary-color);
+  }
+
+  &:active {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+  }
+}
+
+@mixin transparent-btn {
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+  }
+
+  &:focus-visible {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+  }
+
+  &:active {
+    background-color: var(--faded-primary-color);
+    color: var(--light-text-color);
+  }
+}
