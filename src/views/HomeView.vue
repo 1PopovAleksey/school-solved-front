@@ -1,5 +1,12 @@
 <script setup>
 import HeroCard from "../components/HeroCard.vue";
+import SubModal from "../components/SubModal.vue";
+
+import { useModalStore } from "../stores/modal";
+import { storeToRefs } from "pinia";
+
+const { showSubModal } = storeToRefs(useModalStore());
+const { changeVisible } = useModalStore();
 </script>
 
 <script>
@@ -41,11 +48,28 @@ export default {
       if (email.value.trim() === "") {
         this.valid = false;
         email.focus();
-        console.log("Error", this.valid);
-        return this.valid;
+
+        return false;
       }
 
-      console.log("Send", this.valid);
+      if (email.value !== "") {
+        if (
+          !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            email.value
+          )
+        ) {
+          this.valid = false;
+          email.focus();
+
+          return false;
+        }
+      }
+
+      this.Notification();
+    },
+    Notification() {
+      const store = useModalStore();
+      store.changeVisible();
     },
   },
   components: { HeroCard },
@@ -136,14 +160,21 @@ export default {
                 />
               </svg>
             </button>
-            <form action="" class="approdable-packages__subscribe">
+            <form
+              action="https://public.herotofu.com/v1/f12292d0-af76-11ed-bca4-27c965651142"
+              method="post"
+              target="_blank"
+              id="form"
+              class="approdable-packages__subscribe"
+              autocomplete="on"
+            >
               <input
                 type="email"
                 name="email"
                 id="email"
                 placeholder="Subscribe: type your email"
                 aria-label="Type your email"
-                formnovalidate
+                autocomplete="email"
                 required
               />
               <button type="submit" @click="Subscribe" aria-label="Subscribe">
@@ -153,6 +184,7 @@ export default {
             <span class="approdable-packages__error" v-if="!valid">
               Type your email
             </span>
+            <SubModal v-show="showSubModal" @close="changeVisible" />
           </div>
         </div>
       </div>
@@ -345,12 +377,26 @@ export default {
   &__subscribe {
     display: flex;
     align-items: center;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--primary-color);
+    }
+
+    &:focus-visible {
+      border-color: var(--primary-color);
+    }
+
+    &:active {
+      border-color: #e6e6e6;
+    }
 
     input {
       padding: 0 14px;
       width: 265px;
       height: 58px;
-      border: 1px solid #e6e6e6;
       border-radius: 5px 0px 0px 5px;
       font-weight: 400;
       font-size: 14px;
@@ -358,20 +404,17 @@ export default {
       letter-spacing: 0.2px;
       color: var(--text-color);
       background-color: #f9f9f9;
+      transition: all 0.3s ease;
 
       &:placeholder-shown {
         color: var(--second-text-color);
-      }
-
-      &:invalid {
-        color: var(--danger-color);
       }
     }
 
     button {
       height: 58px;
       width: 117px;
-      border: 1px solid #e6e6e6;
+      border: none;
       border-radius: 0px 5px 5px 0px;
       font-weight: 400;
       font-size: 14px;
@@ -380,12 +423,14 @@ export default {
       letter-spacing: 0.2px;
       color: var(--light-text-color);
       background-color: var(--primary-color);
+      @include green-btn;
     }
   }
 
   &__error {
     position: absolute;
-    bottom: 185px;
+    bottom: 180px;
+    padding: 0 14px;
     font-weight: 400;
     font-size: 14px;
     line-height: 143%;
