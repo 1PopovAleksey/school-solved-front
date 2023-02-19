@@ -42,3 +42,14 @@ button {
     outline: none;
   }
 }
+
+input {
+  padding: 0;
+  border: none;
+  background: none;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+}
